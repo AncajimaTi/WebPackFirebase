@@ -93,3 +93,39 @@ usuariosRef.where('salario','>',1800)
 usuariosRef.orderBy('Salario','desc')
             .orderBy('nombre')
             .get().then(retornaDocumentos);
+
+
+## Limit 
+usuariosRef
+    .limit(1)
+    .get().then(retornaDocumentos);
+
+## Limit con where 
+usuariosRef
+    .limit(1)
+    .where('Salario','==',1850)
+    .get().then(retornaDocumentos);
+
+
+## mediante un  Boton 
+
+
+const usuariosRef = db.collection('usuarios');
+
+
+const btnNext = document.createElement('button');
+btnNext.innerText= 'Next Page';
+document.body.append(btnNext);
+
+let lastDocument = null;
+btnNext.addEventListener('click',()=>{
+    console.log('click');
+    const query = usuariosRef
+                        .orderBy('nombre');
+
+    query.limit(2).get().then(snap => {
+        retornaDocumentos(snap);
+    })
+})
+
+btnNext.click();
